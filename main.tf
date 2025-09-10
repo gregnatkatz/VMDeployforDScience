@@ -1,3 +1,5 @@
+
+
 terraform {
   required_version = ">= 1.0"
   required_providers {
@@ -9,12 +11,23 @@ terraform {
 }
 
 provider "azurerm" {
+  subscription_id = var.subscription_id
+  
   features {
     key_vault {
       purge_soft_delete_on_destroy    = true
       recover_soft_deleted_key_vaults = true
     }
   }
+  
+  resource_provider_registrations = "core"
+  resource_providers_to_register = [
+    "Microsoft.MachineLearningServices",
+    "Microsoft.KeyVault",
+    "Microsoft.Storage",
+    "Microsoft.Network",
+    "Microsoft.Insights"
+  ]
 }
 
 data "azurerm_client_config" "current" {}

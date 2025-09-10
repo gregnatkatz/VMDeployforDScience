@@ -53,6 +53,12 @@ check_prerequisites() {
         exit 1
     fi
     
+    if [[ -z "$ARM_SUBSCRIPTION_ID" ]]; then
+        log_error "ARM_SUBSCRIPTION_ID environment variable is required"
+        log_info "Set it with: export ARM_SUBSCRIPTION_ID='your-subscription-id'"
+        exit 1
+    fi
+    
     if [ -z "$SSH_PUBLIC_KEY" ]; then
         log_error "SSH_PUBLIC_KEY environment variable is required."
         log_info "Generate with: ssh-keygen -t rsa -b 4096 -C 'your_email@example.com'"

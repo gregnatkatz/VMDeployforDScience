@@ -1,3 +1,14 @@
+variable "subscription_id" {
+  description = "Azure Subscription ID (required in Azure Provider 4.0+)"
+  type        = string
+  default     = null
+  
+  validation {
+    condition     = var.subscription_id != null || can(regex("^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$", var.subscription_id))
+    error_message = "Subscription ID must be a valid UUID format or set via ARM_SUBSCRIPTION_ID environment variable."
+  }
+}
+
 variable "resource_group_name" {
   description = "Name of the Azure Resource Group"
   type        = string

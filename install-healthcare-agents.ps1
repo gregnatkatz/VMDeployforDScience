@@ -8,7 +8,8 @@ param(
     [string]$ComputeName = "healthcare-a10v5-ci",
     [string]$VMSize = "Standard_NV36ads_A10_v5",
     [string]$AdminUsername = "azureuser",
-    [string]$SSHPublicKey = $env:SSH_PUBLIC_KEY
+    [string]$SSHPublicKey = $env:SSH_PUBLIC_KEY,
+    [string]$SubscriptionId = $env:ARM_SUBSCRIPTION_ID
 )
 
 # Set error action preference
@@ -70,6 +71,13 @@ function Test-Prerequisites {
     }
     catch {
         Write-Error "Not logged into Azure. Please run 'az login' first."
+        exit 1
+    }
+    
+    # Validate Azure Subscription ID
+    if ([string]::IsNullOrEmpty($SubscriptionId)) {
+        Write-Error "❌ Azure Subscription ID is required"
+        Write-Host "Set it with: `$env:ARM_SUBSCRIPTION_ID = 'your-subscription-id'"
         exit 1
     }
     

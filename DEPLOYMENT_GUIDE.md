@@ -5,6 +5,7 @@
 1. **Prerequisites**
    - Azure CLI installed and authenticated (`az login`)
    - Terraform >= 1.0 installed
+   - Azure Subscription ID (required for Azure Provider 4.0+)
    - SSH key pair generated
 
 2. **Deploy**
@@ -14,7 +15,7 @@
    
    # Copy and edit configuration
    cp terraform.tfvars.example terraform.tfvars
-   # Edit terraform.tfvars with your values
+   # Edit terraform.tfvars with your values (REQUIRED: subscription_id)
    
    # Run deployment script
    ./deploy.sh
@@ -100,6 +101,7 @@ Use the standalone installation script for deployment without Terraform:
 ### **Linux/macOS (Bash)**
 ```bash
 # Set required environment variables
+export ARM_SUBSCRIPTION_ID="your-subscription-id"
 export SSH_PUBLIC_KEY="$(cat ~/.ssh/id_rsa.pub)"
 export RESOURCE_GROUP_NAME="rg-healthcare-ai"
 export LOCATION="eastus"
@@ -111,6 +113,7 @@ export LOCATION="eastus"
 ### **Windows (PowerShell)**
 ```powershell
 # Set required environment variables
+$env:ARM_SUBSCRIPTION_ID = "your-subscription-id"
 $env:SSH_PUBLIC_KEY = Get-Content ~/.ssh/id_rsa.pub -Raw
 
 # Run the installation script with parameters

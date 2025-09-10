@@ -55,11 +55,14 @@ The configuration includes three specialized healthcare AI agents:
    ```
 
 2. **Edit terraform.tfvars** with your specific values:
+   - **REQUIRED**: Update `subscription_id` with your Azure subscription ID
    - Update `ssh_public_key` with your public key content
    - Modify `resource_group_name`, `location`, and `prefix` as needed
    - Choose appropriate `a10v5_vm_size` based on your requirements
    - Configure healthcare agent settings (`healthcare_agents_enabled`, model names)
    - Add relevant tags for your organization
+
+**Note**: Azure Provider 4.0+ requires explicit subscription ID configuration. You can either set it in `terraform.tfvars` or use the `ARM_SUBSCRIPTION_ID` environment variable.
 
 ## A10v5 VM Sizes
 
@@ -198,6 +201,7 @@ For installation without Terraform, use the standalone script:
 ### **Linux/macOS (Bash)**
 ```bash
 # Set environment variables
+export ARM_SUBSCRIPTION_ID="your-subscription-id"
 export RESOURCE_GROUP_NAME="rg-healthcare-ai"
 export LOCATION="eastus"
 export SSH_PUBLIC_KEY="$(cat ~/.ssh/id_rsa.pub)"
@@ -209,6 +213,7 @@ export SSH_PUBLIC_KEY="$(cat ~/.ssh/id_rsa.pub)"
 ### **Windows (PowerShell)**
 ```powershell
 # Set environment variables
+$env:ARM_SUBSCRIPTION_ID = "your-subscription-id"
 $env:SSH_PUBLIC_KEY = Get-Content ~/.ssh/id_rsa.pub -Raw
 
 # Run installation script with parameters
